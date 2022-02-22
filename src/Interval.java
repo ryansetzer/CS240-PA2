@@ -45,7 +45,7 @@ public class Interval {
 	public String toString() {
 		String result = String.valueOf(lower);
 		if (upper != lower) {
-			result += "-" + String.valueOf(upper);
+			result += "-" + upper;
 		}
 		return result;
 	}
