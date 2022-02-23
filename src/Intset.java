@@ -11,11 +11,15 @@ public class Intset implements Iterable<Integer> {
 	private LinkedIntSet integerSet;
 	
 	public boolean isEmpty() {
-		return false;
+		return integerSet.size() == 0;
 	}
 	
 	public int size() {
-		return -1;
+		int totalSize = 0;
+		for (int i = 0; i < integerSet.size(); i++) {
+			totalSize += integerSet.get(i).getInterval().size();
+		}
+		return totalSize;
 	}
 	
 	public int getIntervalCount(Interval interval) {
@@ -23,7 +27,7 @@ public class Intset implements Iterable<Integer> {
 	}
 	
 	public Interval getInterval(int index) {
-		return null;
+		return integerSet.get(index).getInterval();
 	}
 	
 	public boolean add(int index) {
@@ -34,7 +38,12 @@ public class Intset implements Iterable<Integer> {
 	}
 	
 	public String toString() {
-		return null;
+		String result = "{";
+		for (int i = 0; i < integerSet.size(); i++) {
+			result += integerSet.get(i).getInterval().toString() + ",";
+		}
+		// remove extra ',' later
+		return result += "}";
 	}
 	
 	public boolean equals(Object obj) {
@@ -54,8 +63,8 @@ class LinkedIntSet implements Iterable<Integer> {
 	private int size;
 
 	public LinkedIntSet() {
-		head = new Node(null, null, null, null);
-		tail = new Node(null, null, head, null);
+		head = new Node(null, null, null);
+		tail = new Node(null, head, null);
 		head.setNext(tail);
 		this.size = 0;
 	}
@@ -64,13 +73,22 @@ class LinkedIntSet implements Iterable<Integer> {
 		if (index > size || size < 0) {
 			throw new IllegalArgumentException();
 		} else {
-			Node tempNode = head;
-			for (int i = 0; i < index; i++) {
-				tempNode = tempNode.getNext();
-			}
+			Node tempNode = get(index);
 			// curently working here, need to find a way to insert new node
 		}
 		size++;
+	}
+
+	public Node get(int index) {
+		Node tempNode = head;
+		for (int i = 0; i < index; i++) {
+			tempNode = tempNode.getNext();
+		}
+		return tempNode;
+	}
+
+	public int size() {
+		return size;
 	}
 
 	@Override
@@ -83,12 +101,10 @@ class Node {
 
 	private Node next;
 	private Node prev;
-	private Integer lower;
-	private Integer upper;
+	private Interval interval;
 
-	public Node(Integer lower, Integer upper, Node next, Node prev) {
-		this.lower = lower;
-		this.upper = upper;
+	public Node(Interval interval, Node next, Node prev) {
+		this.interval = interval;
 		this.next = next;
 		this.prev = prev;
 	}
@@ -107,5 +123,13 @@ class Node {
 
 	public void setPrev(Node prev) {
 		this.prev = prev;
+	}
+
+	public Interval getInterval() {
+		return interval;
+	}
+
+	public void setInterval(Interval interval) {
+		this.interval = interval;
 	}
 }
