@@ -22,15 +22,15 @@ public class Intset implements Iterable<Integer> {
 		return -1;
 	}
 	
-	public Interval getInterval(int i) {
+	public Interval getInterval(int index) {
 		return null;
 	}
 	
-	public boolean add(int i) {
+	public boolean add(int index) {
 		return false;
 	}
 	
-	public void remove(int i) {
+	public void remove(int index) {
 	}
 	
 	public String toString() {
@@ -60,7 +60,7 @@ class LinkedIntSet implements Iterable<Integer> {
 		this.size = 0;
 	}
 
-	public void add(Node node, int index) {
+	public void add(int index) {
 		if (index > size || size < 0) {
 			throw new IllegalArgumentException();
 		} else {
