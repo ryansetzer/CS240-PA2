@@ -49,4 +49,12 @@ public class Interval {
 		}
 		return result;
 	}
+
+	public int getLowerBound() {
+		return this.lower;
+	}
+
+	public int getUpperBound() {
+		return this.upper;
+	}
 }

@@ -16,6 +16,8 @@ class TestInterval {
 		Interval interval = new Interval(2, 3);
 		assertEquals(2, interval.size());
 		assertEquals("2-3", interval.toString());
+		assertEquals(2, interval.getLowerBound());
+		assertEquals(3, interval.getUpperBound());
 		assertThrows(IllegalArgumentException.class, () -> new Interval(3, 2));
 		
 	}
